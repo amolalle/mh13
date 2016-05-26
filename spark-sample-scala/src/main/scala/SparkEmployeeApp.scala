@@ -17,15 +17,13 @@ object SparkEmployeeApp extends App{
 	val salariesFile = sc.textFile("file:///Users/amol/tmp/data/employees/all_salaries.csv")
 
 	//create pair rdd with (empid,Employee)
-	val allEmployees = employeeFile.map(row => {
-												val fields = row.split(",")
-												(fields(0).toInt,Employee(fields(0).toInt,fields(1),fields(2),fields(4),fields(5)))
-												})
+	val allEmployees = employeeFile.map(row => {val fields = row.split(",")
+		(fields(0).toInt,Employee(fields(0).toInt,fields(1),fields(2),fields(4),fields(5)))
+		})
 	//create a pair rdd with (empid,Salary)							 
-	val salaries = salariesFile.map(row => {
-											val fields = row.split(",")
-											(fields(0).toInt,Salary(fields(0).toInt,fields(1).toInt,fields(2),fields(3)))
-											})
+	val salaries = salariesFile.map(row => {val fields = row.split(",")
+		(fields(0).toInt,Salary(fields(0).toInt,fields(1).toInt,fields(2),fields(3)))
+		})
 
 	//join emoloyees with salaries
 	val empSalaries = allEmployees.join(salaries)
